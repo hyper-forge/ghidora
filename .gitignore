@@ -1,0 +1,7 @@
+dist
+node_modules
+pkg 
+bundle.main.cjs
+bundle.main.cjs.map
+.ghidora
+backups.txt

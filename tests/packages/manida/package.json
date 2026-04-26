@@ -1,0 +1,7 @@
+{
+  "name": "manida",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "echo build lib"
+  }
+}

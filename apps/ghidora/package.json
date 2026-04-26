@@ -1,0 +1,44 @@
+{
+  "name": "@ghidora/cli",
+  "version": "0.0.1",
+  "description": "Zero-dependency monorepo orchestrator powered by Rust + WASM => JS",
+  "main": "src/main.ts",
+  "scripts": {
+    "build": "node esbuild.config.cjs",
+    "check": "tsc --noEmit",
+    "test": ".\\bintest\\tester.exe"
+  },
+  "ghidoraconfig": {
+    "dependsOn": {
+      "build": [
+        "ghidora-core:check"
+      ]
+    }
+  },
+  "keywords": [],
+  "author": {
+    "name": "Hyperforge",
+    "url": "https://ghidora.hyperforge.in"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hyper-forge/ghidora"
+  },
+  "homepage": "https://ghidora.hyperforge.in",
+  "bugs": {
+    "url": "https://github.com/hyper-forge/ghidora/issues"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=16"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.3.12",
+    "@types/deno": "^2.5.0",
+    "@types/node": "^25.5.0",
+    "esbuild": "^0.28.0",
+    "express": "^5.2.1",
+    "typescript": "^6.0.2"
+  }
+}

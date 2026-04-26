@@ -1,0 +1,27 @@
+{
+  "name": "@ghidora/core",
+  "version": "0.0.1",
+  "description": "Ghidora's core powered by rust and blake crates",
+  "scripts": {
+    "build": "wasm-pack build --target nodejs",
+    "check": "cargo check",
+    "swarm": "echo 'dei'"
+  },
+  "keywords": [],
+  "author": {
+    "name": "Hyperforge",
+    "url": "https://ghidora.hyperforge.in"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hyper-forge/ghidora"
+  },
+  "homepage": "https://ghidora.hyperforge.in",
+  "bugs": {
+    "url": "https://github.com/hyper-forge/ghidora/issues"
+  },
+  "engines": {
+    "node": ">=16"
+  }
+}

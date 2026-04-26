@@ -1,0 +1,19 @@
+{
+  "name": "honothree",
+  "scripts": {
+    "dev:three:mapi": "bun run --hot src/index.ts"
+  },
+  "ghidoraconfig": {
+    "dependsOn": {
+      "dev:three:mapi": [
+        "honoone:test"
+      ]
+    }
+  },
+  "dependencies": {
+    "hono": "^4.12.12"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}
