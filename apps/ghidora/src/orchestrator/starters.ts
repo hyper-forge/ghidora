@@ -91,7 +91,7 @@ export async function initApp(root: string, name: string): Promise<void> {
   await writeIfMissing(path.join(dir, "package.json"), pkg);
 
   const esbuildCfg = tui.get_esbuild_config();
-  await writeIfMissing(path.join(dir, "esbuild.config.js"), esbuildCfg);
+  await writeIfMissing(path.join(dir, "esbuild.config.cjs"), esbuildCfg);
 
   await writeIfMissing(
     path.join(src, "main.ts"),

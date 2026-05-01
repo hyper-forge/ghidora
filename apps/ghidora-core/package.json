@@ -1,5 +1,5 @@
 {
-  "name": "@ghidora/core",
+  "name": "@hyperforge/ghidora-core",
   "version": "0.0.1",
   "description": "Ghidora's core powered by rust and blake crates",
   "scripts": {
@@ -15,11 +15,11 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hyper-forge/ghidora"
+    "url": "https://github.com/hyperforge/ghidora"
   },
   "homepage": "https://ghidora.hyperforge.in",
   "bugs": {
-    "url": "https://github.com/hyper-forge/ghidora/issues"
+    "url": "https://github.com/hyperforge/ghidora/issues"
   },
   "engines": {
     "node": ">=16"

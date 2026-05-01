@@ -153,8 +153,8 @@ export default {
   //      // your allowed bin paths
   //     ].join(";")
   //   },
-    windowsRawArguments: true,  // Deno Safe WIN Spawn
-  },
+  //  windowsRawArguments: true,  // Deno Safe WIN Spawn
+  // },
 
   // ONLY tasks declared here get:
   // - DAG ordering

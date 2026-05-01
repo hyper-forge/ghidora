@@ -3,7 +3,7 @@ import { getRuntime } from "../datatypes/validateDataTypes.js";
 export const checkForUpdates = async (currentVersion: string) => {
   try {
     const res = await fetch(
-      "https://registry.npmjs.org/@bunvader/dragon/latest",
+      "https://registry.npmjs.org/@hyperforge/ghidora/latest",
     );
     if (!res.ok) return;
 
@@ -17,7 +17,7 @@ export const checkForUpdates = async (currentVersion: string) => {
 
     console.log(
       `\n⚠ Update available: ${currentVersion} → ${latest}\n` +
-        `Run: npm i -g ghidora@latest\n` +
+        `Run: npm i -g @hyperforge/ghidora@latest\n` +
         `Or choose global install of your preferred runtime\n` +
         `Currently using ${getRuntime()}`,
     );
@@ -27,5 +27,5 @@ export const checkForUpdates = async (currentVersion: string) => {
 };
 
 export const getVersion = (name: string, version: string) => {
-  console.log(`${name} -v${version}`);
+  console.log(`${name.replace("@hyperforge/ghidora", "ghidora")} -v${version}`);
 };

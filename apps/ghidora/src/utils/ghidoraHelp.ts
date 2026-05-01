@@ -30,5 +30,9 @@ Examples:
   ghidora exec "npm test"
   ghidora graph
 
+To Report Bugs plz visit:
+   https://github.com/hyperforge/ghidora/issues
+
+
 `;
 };
