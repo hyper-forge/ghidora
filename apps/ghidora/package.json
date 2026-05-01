@@ -23,11 +23,11 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hyperforge/ghidora"
+    "url": "https://github.com/hyper-forge/ghidora"
   },
   "homepage": "https://ghidora.hyperforge.in",
   "bugs": {
-    "url": "https://github.com/hyperforge/ghidora/issues"
+    "url": "https://github.com/hyper-forge/ghidora/issues"
   },
   "type": "module",
   "engines": {
