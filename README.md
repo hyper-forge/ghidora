@@ -1,61 +1,84 @@
 # Ghidora ⚡
 
-> Zero-dependency monorepo orchestrator powered by Rust + WASM => JS
+> Zero-dependency monorepo orchestrator powered by Rust + WASM → JS
+
+[![npm version](https://img.shields.io/npm/v/@hyperforge/ghidora.svg)](https://www.npmjs.com/package/@hyperforge/ghidora)
 
 ---
 
-## 🚀 Features
+## 🧠 Overview
 
-* ⚡ Blazing fast task execution (Rust core)
-* 📦 Workspace discovery
-* 🧠 Smart caching
-* 🔌 Zero dependencies
-* 🧩 Works with Node, Bun, Deno
+Ghidora is a **cross-runtime build orchestration system** designed with a split architecture:
+
+* **TypeScript CLI layer** → orchestration & runtime handling
+* **Rust core (via WASM)** → deterministic computation & hashing
+
+This separation allows Ghidora to remain:
+
+* Runtime-agnostic (Node, Bun, Deno)
+* Dependency-free at execution level
+* Highly performant
 
 ---
 
-## 📁 Structure
+## 📁 Repository Structure
 
+```
 apps/
-ghidora/        → CLI
-ghidora-core/   → Rust crypto engine
-
----
-
-## ⚡ Usage
-
-```bash
-npx ghidora init --app=my-app
-```
-
-```bash
-ghidora run build
-ghidora run test
+  ghidora/        → CLI layer (TypeScript)
+  ghidora-core/   → Rust engine compiled to WASM
 ```
 
 ---
 
-## 🧪 Example
+## 🧩 Package Breakdown
 
-```bash
-ghidora init --app=demo
-cd demo
-ghidora run build
-```
+### `apps/ghidora` — CLI Layer
+
+Handles all **runtime-facing responsibilities**:
+
+* Workspace discovery
+* Task orchestration
+* Process spawning abstraction
+* Config parsing
+* WASM bridge integration
+
+This layer is intentionally lightweight and avoids heavy logic.
+
+---
+
+### `apps/ghidora-core` — Rust Engine
+
+Core computation layer responsible for:
+
+* Blake3 hashing
+* Cache key generation
+* Deterministic computation
+* Future task graph execution
+
+Compiled to **WebAssembly** for portability across runtimes.
 
 ---
 
 ## 🧠 Architecture
 
-CLI → WASM → Rust Core
+```
+TypeScript CLI
+      ↓
+WASM Bridge
+      ↓
+Rust Core
+```
 
 ---
 
-## 📌 Roadmap
+## ⚡ Design Principles
 
-* Remote cache (Bazel-style)
-* Distributed execution
-* Graph visualization
+* **Zero dependencies** — no runtime bloat
+* **Deterministic execution** — reproducible builds
+* **Portable compute layer** — via WASM
+* **Runtime independence** — Node, Bun, Deno
+
 
 ---
 
