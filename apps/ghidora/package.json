@@ -37,7 +37,7 @@
     "@types/bun": "^1.3.12",
     "@types/deno": "^2.5.0",
     "@types/node": "^25.5.0",
-    "esbuild": "^0.28.0",
+    "esbuild": "^0.28.1",
     "express": "^5.2.1",
     "typescript": "^6.0.2"
   }
