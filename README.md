@@ -1,4 +1,4 @@
-# Ghidora ⚡
+# Ghidora ⚡ 
 
 > Zero-dependency monorepo orchestrator powered by Rust + WASM → JS
 
