@@ -6,6 +6,7 @@ use boltffi::export;
 
 #[derive(Clone, Copy, Debug)]
 #[repr(u8)]
+#[export]
 pub enum BadgeKind {
     Success = 0,
     Info = 1,

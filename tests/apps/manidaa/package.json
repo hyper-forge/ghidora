@@ -1,0 +1,14 @@
+{
+  "name": "manidaa",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "echo build app"
+  },
+  "ghidoraconfig": {
+    "dependsOn": {
+      "build": [
+        "manida:build"
+      ]
+    }
+  }
+}

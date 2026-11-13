@@ -15,7 +15,7 @@ deployment_target = "16.0"
 include_macos = false
 
 [targets.apple.swift]
-module_name = "Mylib"
+module_name = "ghidora"
 tools_version = "5.9"
 error_style = "throwing"
 
@@ -40,7 +40,7 @@ output = "dist/android"
 min_sdk = 24
 
 [targets.android.kotlin]
-package = "com.example.mylib"
+package = "com.example.ghidora"
 desktop_loader = "bundled"
 api_style = "top_level"
 error_style = "throwing"
@@ -83,7 +83,7 @@ level = "s"
 [targets.wasm.typescript.type_mappings]
 
 [targets.wasm.npm]
-package_name = "mylib"
+package_name = "ghidora"
 #targets = ["nodejs", "web", "bundler"]
 targets = ["nodejs"]
 

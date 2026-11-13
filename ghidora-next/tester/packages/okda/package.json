@@ -1,0 +1,10 @@
+{
+  "name": "okda",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^7.0.2"
+  }
+}

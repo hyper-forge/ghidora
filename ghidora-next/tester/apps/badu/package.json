@@ -1,0 +1,11 @@
+{
+  "name": "badu",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "node esbuild.config.mjs",
+    "start": "node dist/bundle.js"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
+  }
+}

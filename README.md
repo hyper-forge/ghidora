@@ -1,6 +1,6 @@
-# ghidora-core NEXT 🦀
+# Ghidora ⚡ next
 
-> Experimental Rust + WASM computation engine for Ghidora (engine rewrite with BoltFFi)
+> Zero-dependency monorepo orchestrator powered by Rust + WASM → JS
 
 [![npm version](https://img.shields.io/npm/v/@hyperforge/ghidora.svg)](https://www.npmjs.com/package/@hyperforge/ghidora)
 
@@ -8,84 +8,80 @@
 
 ## 🧠 Overview
 
-`ghidora-core` is the **low-level computation engine** of Ghidora.
+Ghidora is a **cross-runtime build orchestration system** designed with a split architecture:
 
-Written in Rust and compiled to WebAssembly, it provides a
-deterministic and high-performance foundation for build orchestration.
+* **TypeScript CLI layer** → orchestration & runtime handling
+* **Rust core (via WASM)** → deterministic computation & hashing
 
----
+This separation allows Ghidora to remain:
 
-## ⚡ Responsibilities
-
-* Cryptographic hashing (Blake3)
-* Cache key computation
-* Deterministic input processing
-* Foundation for task graph execution (future)
+* Runtime-agnostic (Node, Bun, Deno)
+* Dependency-free at execution level
+* Highly performant
 
 ---
 
-## 🧩 Internal Structure (Conceptual)
+## 📁 Repository Structure
 
 ```
-src/
-  hashing/        → Blake3 implementation
-  cache/          → key derivation logic
-  wasm/           → WASM bindings interface
-  utils/          → shared helpers
+apps/
+  ghidora/        → CLI layer (TypeScript)
+  ghidora-core/   → Rust engine compiled to WASM with BoltFFI
 ```
 
 ---
 
-## 🌍 WASM Integration
+## 🧩 Package Breakdown
 
-The core is compiled into:
+### `apps/ghidora` — CLI Layer
 
-* `.wasm` binary
-* JS bindings for runtime consumption
+Handles all **runtime-facing responsibilities**:
 
-This allows execution across:
+* Workspace discovery
+* Task orchestration
+* Process spawning abstraction
+* Config parsing
+* WASM bridge integration
 
-* Node.js
-* Deno
-* Bun
-
-without native bindings.
-
----
-
-## ⚡ Build Targets
-
-### Native
-
-```
-cargo build --release
-```
-
-### WebAssembly
-
-```
-wasm-pack build
-```
+This layer is intentionally lightweight and avoids heavy logic.
 
 ---
 
-## 🧠 Design Principles
+### `apps/ghidora-core` — Rust Engine
 
+Core computation layer responsible for:
+
+* Blake3 hashing
+* Cache key generation
 * Deterministic computation
-* Memory safety (Rust)
-* Zero runtime dependencies
-* Cross-platform portability
+* Future task graph execution
+
+Compiled to **WebAssembly** for portability across runtimes.
 
 ---
 
-## 📌 Future Scope
+## 🧠 Architecture
 
-* Task graph engine
-* Incremental computation layer
-* Remote cache protocol primitives
+```
+TypeScript CLI
+      ↓
+WASM Bridge
+      ↓
+Rust Core
+```
+
+---
+
+## ⚡ Design Principles
+
+* **Zero dependencies** — no runtime bloat
+* **Deterministic execution** — reproducible builds
+* **Portable compute layer** — via WASM
+* **Runtime independence** — Node, Bun, Deno
+
 
 ---
 
 ## 📜 License
 
-Apache-2.0
+Apache-2.0 © 2026 Hyperforge

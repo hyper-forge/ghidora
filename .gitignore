@@ -1,8 +1,7 @@
-/target
-**/*.rs.bk
-Cargo.lock
-bin/
-pkg/
-node_modules
 dist
-wasm-pack.log
+node_modules
+pkg 
+bundle.main.cjs
+bundle.main.cjs.map
+.ghidora
+backups.txt
