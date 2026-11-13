@@ -313,7 +313,7 @@ GRAPH LOAD (CACHED)
           if (hit) {
             process.stdout.write(
               tui.badge(`Restored From Local-Cache -> ${pkg.name}:${task}`, 1) +
-                "\n",
+              "\n",
             );
             return;
           }
@@ -441,8 +441,20 @@ GRAPH LOAD (CACHED)
   ========================= */
 
   async function runLoose(taskName: TaskName): Promise<void> {
+    const targets = scopedPackages().filter(
+      (pkg) => Boolean(pkg.targets?.[taskName]),
+    );
+
+    if (targets.length === 0) {
+      throw new Error(`No packages contain task "${taskName}".`);
+    }
+
+    console.log(
+      tui.badge(`Executing ${taskName} in ${targets.length} packages`, 1),
+    );
+
     await executePlan({
-      targets: scopedPackages(),
+      targets,
       parallel: maxParallel,
       noBail: flags.noBail,
       runTarget: (pkg) => runTask(pkg, taskName, executor, config),
@@ -512,17 +524,17 @@ GRAPH LOAD (CACHED)
 
           const child = useShell
             ? spawnShellCommand(
-                commandLine,
-                { cwd: pkg.path, stdio: "inherit" }, 
-                config?.sandbox,
-                config,
-              )
+              commandLine,
+              { cwd: pkg.path, stdio: "inherit" },
+              config?.sandbox,
+              config,
+            )
             : spawnUnified(
-                parsed!.command,
-                parsed!.args,
-                { cwd: pkg.path, stdio: ["ignore", "pipe", "pipe"] },
-                config,
-              );
+              parsed!.command,
+              parsed!.args,
+              { cwd: pkg.path, stdio: ["ignore", "pipe", "pipe"] },
+              config,
+            );
 
           handleProcessEvents(child, {
             onError: reject,
@@ -533,9 +545,9 @@ GRAPH LOAD (CACHED)
             onStdout: useShell
               ? undefined
               : (d) =>
-                  process.stdout.write(
-                    `${tui.badge(pkg.name, tui.BadgeKind?.Success ?? 0)} - ${d}`,
-                  ),
+                process.stdout.write(
+                  `${tui.badge(pkg.name, tui.BadgeKind?.Success ?? 0)} - ${d}`,
+                ),
             onStderr: useShell
               ? undefined
               : (d) => process.stderr.write(`[${pkg.name}] ${d}`),
@@ -689,6 +701,17 @@ GRAPH LOAD (CACHED)
       if (taskDef) {
         taskDef.persistent ? await runPersistent(cmd) : await runFinite(cmd);
       } else {
+        const matchingPackages = scopedPackages().filter(
+          (pkg) => Boolean(pkg.targets?.[cmd]),
+        );
+
+        if (matchingPackages.length === 0) {
+          throw new Error(
+            `Unknown command or task: ${cmd}\n` +
+            "Run 'ghidora --help' to see available commands and tasks.",
+          );
+        }
+
         await runLoose(cmd);
       }
     }
