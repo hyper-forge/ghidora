@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GHIDORA</title>
+  <style>
+    :root {
+      --bg0: #08101d;
+      --bg1: #0d1728;
+      --panel: rgba(15, 23, 42, .82);
+      --panel2: rgba(17, 24, 39, .9);
+      --panel3: rgba(10, 15, 25, .96);
+      --border: rgba(148, 163, 184, .16);
+      --border-strong: rgba(125, 135, 160, .26);
+      --text: #e5eefb;
+      --muted: #95a6bf;
+      --muted-2: #7d8ca3;
+      --accent: #7c3aed;
+      --accent2: #2563eb;
+      --success: #16a34a;
+      --warn: #d97706;
+      --danger: #ef4444;
+      --shadow: 0 20px 60px rgba(0, 0, 0, .42);
+      --radius: 22px;
+      --radius-sm: 16px;
+      --focus: 0 0 0 4px rgba(37, 99, 235, .18);
+    }
+
+    body[data-theme="day"] {
+      --bg0: #f1f5fb;
+      --bg1: #e7eef8;
+      --panel: rgba(255, 255, 255, .84);
+      --panel2: rgba(255, 255, 255, .94);
+      --panel3: rgba(241, 245, 249, .98);
+      --border: rgba(148, 163, 184, .22);
+      --border-strong: rgba(100, 116, 139, .28);
+      --text: #0f172a;
+      --muted: #475569;
+      --muted-2: #64748b;
+      --accent: #6d28d9;
+      --accent2: #1d4ed8;
+      --success: #15803d;
+      --warn: #b45309;
+      --danger: #dc2626;
+      --shadow: 0 20px 50px rgba(15, 23, 42, .12);
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0
+    }
+
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 12% 14%, rgba(124, 58, 237, .16), transparent 26%),
+        radial-gradient(circle at 80% 0%, rgba(37, 99, 235, .12), transparent 24%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow: hidden;
+      transition: background .25s ease, color .25s ease;
+    }
+
+    button,
+    input {
+      font: inherit
+    }
+
+    button {
+      border: 0
+    }
+
+    a {
+      color: inherit
+    }
+
+    .app {
+      height: 100%;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 16px;
+    }
+
+    .sidebar,
+    .main {
+      min-width: 0;
+      border: 1px solid var(--border);
+      border-radius: calc(var(--radius) + 2px);
+      box-shadow: var(--shadow);
+      background: var(--panel);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      overflow: hidden;
+    }
+
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-head {
+      padding: 18px 18px 14px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255, 255, 255, .02), transparent);
+    }
+
+    .brand {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .brand p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .theme-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: var(--panel2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: transform .15s ease, border-color .15s ease, background .15s ease;
+      white-space: nowrap;
+    }
+
+    .theme-btn:hover {
+      transform: translateY(-1px);
+      border-color: var(--border-strong)
+    }
+
+    .theme-btn:focus-visible {
+      outline: none;
+      box-shadow: var(--focus)
+    }
+
+    .theme-btn svg {
+      width: 16px;
+      height: 16px;
+      flex: none
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .stat {
+      padding: 10px 12px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, .03);
+    }
+
+    .stat .k {
+      display: block;
+      font-size: 11px;
+      color: var(--muted-2);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    .stat .v {
+      display: block;
+      margin-top: 4px;
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .search {
+      padding: 14px 16px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .search input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      outline: none;
+      background: rgba(255, 255, 255, .03);
+      color: var(--text);
+    }
+
+    .search input::placeholder {
+      color: var(--muted-2)
+    }
+
+    .search input:focus {
+      border-color: rgba(37, 99, 235, .45);
+      box-shadow: var(--focus)
+    }
+
+    .tree-wrap {
+      flex: 1;
+      overflow: auto;
+      padding: 10px 10px 12px;
+    }
+
+    .tree-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 4px 8px 10px;
+    }
+
+    .section-title {
+      margin: 0;
+      color: var(--muted-2);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+    }
+
+    .tiny {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .tree {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .pkg {
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, .03);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .pkg-head {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 10px;
+      align-items: center;
+      padding: 12px 12px;
+      cursor: pointer;
+      transition: background .15s ease, border-color .15s ease;
+    }
+
+    .pkg-head:hover {
+      background: rgba(37, 99, 235, .06)
+    }
+
+    .pkg-head:focus-visible {
+      outline: none;
+      box-shadow: var(--focus)
+    }
+
+    .pkg.active {
+      border-color: rgba(124, 58, 237, .45);
+      box-shadow: 0 0 0 1px rgba(124, 58, 237, .12) inset;
+    }
+
+    .chev {
+      width: 18px;
+      height: 18px;
+      color: var(--muted);
+      transition: transform .16s ease;
+    }
+
+    .pkg.expanded .chev {
+      transform: rotate(90deg)
+    }
+
+    .pkg-title {
+      min-width: 0;
+    }
+
+    .pkg-title strong {
+      display: block;
+      font-size: 14px;
+      line-height: 1.25;
+      word-break: break-word;
+    }
+
+    .pkg-title span {
+      display: block;
+      margin-top: 3px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .badge {
+      flex: none;
+      font-size: 11px;
+      padding: 5px 8px;
+      border-radius: 999px;
+      color: var(--text);
+      background: rgba(37, 99, 235, .09);
+      border: 1px solid rgba(37, 99, 235, .18);
+    }
+
+    .badge.gray {
+      background: rgba(100, 116, 139, .08);
+      border-color: rgba(100, 116, 139, .16);
+    }
+
+    .pkg-body {
+      display: none;
+      padding: 0 10px 10px 34px;
+    }
+
+    .pkg.expanded .pkg-body {
+      display: block
+    }
+
+    .script {
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 9px 10px;
+      margin-top: 6px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, .03);
+      border: 1px solid transparent;
+      color: var(--text);
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .script:hover {
+      background: rgba(37, 99, 235, .06);
+      border-color: rgba(37, 99, 235, .16);
+    }
+
+    .script .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      margin-top: 5px;
+      background: var(--accent2);
+      flex: none;
+    }
+
+    .script .text {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .script .text strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.25;
+      word-break: break-word;
+    }
+
+    .script .text span {
+      display: block;
+      margin-top: 3px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .script .pill {
+      font-size: 11px;
+      color: var(--muted-2);
+      padding: 4px 7px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, .02);
+      flex: none;
+    }
+
+    .main {
+      position: relative;
+      padding: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero {
+      width: min(820px, 100%);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      background: var(--panel2);
+      box-shadow: var(--shadow);
+      padding: 28px;
+    }
+
+    .hero-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .hero h2 {
+      margin: 0;
+      font-size: 30px;
+      line-height: 1.05;
+      letter-spacing: -.03em;
+    }
+
+    .hero p {
+      margin: 12px 0 0;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 62ch;
+    }
+
+    .hero-grid {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 14px;
+      background: rgba(255, 255, 255, .03);
+    }
+
+    .card .k {
+      display: block;
+      font-size: 11px;
+      color: var(--muted-2);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+    }
+
+    .card .v {
+      display: block;
+      margin-top: 6px;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .card .s {
+      display: block;
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .tip {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: 18px;
+      border: 1px dashed var(--border-strong);
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(1, 4, 10, .78);
+      z-index: 30;
+    }
+
+    .modal-backdrop.open {
+      display: flex
+    }
+
+    .modal {
+      width: min(980px, 100%);
+      max-height: min(88vh, 920px);
+      overflow: hidden;
+      border-radius: 28px;
+      border: 1px solid rgba(148, 163, 184, .14);
+      background: linear-gradient(180deg, rgba(8, 12, 20, .98), rgba(4, 8, 16, .98));
+      box-shadow: 0 28px 90px rgba(0, 0, 0, .64);
+      display: grid;
+      grid-template-rows: auto 1fr;
+    }
+
+    body[data-theme="day"] .modal {
+      background: linear-gradient(180deg, rgba(15, 23, 42, .96), rgba(2, 6, 23, .96));
+      color: var(--text);
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 18px 18px 14px;
+      border-bottom: 1px solid rgba(148, 163, 184, .12);
+      background: linear-gradient(180deg, rgba(255, 255, 255, .03), transparent);
+    }
+
+    .modal-head h3 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -.02em;
+    }
+
+    .modal-head p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .close {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, .16);
+      background: rgba(255, 255, 255, .04);
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    .close:hover {
+      background: rgba(239, 68, 68, .10);
+      border-color: rgba(239, 68, 68, .22)
+    }
+
+    .close:focus-visible {
+      outline: none;
+      box-shadow: var(--focus)
+    }
+
+    .modal-body {
+      overflow: auto;
+      padding: 18px;
+      background:
+        radial-gradient(circle at 20% 0%, rgba(124, 58, 237, .06), transparent 28%),
+        radial-gradient(circle at 100% 0%, rgba(37, 99, 235, .08), transparent 24%),
+        rgba(1, 4, 10, .18);
+    }
+
+    .modal-grid {
+      display: grid;
+      grid-template-columns: 1.25fr .95fr;
+      gap: 14px;
+    }
+
+    .box {
+      border: 1px solid rgba(148, 163, 184, .12);
+      border-radius: 22px;
+      background: rgba(255, 255, 255, .03);
+      padding: 16px;
+    }
+
+    .box h4 {
+      margin: 0 0 10px;
+      font-size: 12px;
+      color: var(--muted-2);
+      text-transform: uppercase;
+      letter-spacing: .12em;
+    }
+
+    .desc {
+      color: var(--text);
+      line-height: 1.7;
+      white-space: pre-wrap;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tag {
+      font-size: 12px;
+      padding: 6px 9px;
+      border-radius: 999px;
+      color: var(--text);
+      background: rgba(37, 99, 235, .12);
+      border: 1px solid rgba(37, 99, 235, .18);
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .link {
+      text-decoration: none;
+      font-size: 12px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, .16);
+      background: rgba(255, 255, 255, .03);
+    }
+
+    .link:hover {
+      border-color: rgba(37, 99, 235, .25);
+      background: rgba(37, 99, 235, .06)
+    }
+
+    .script-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .script-row {
+      border: 1px solid rgba(148, 163, 184, .14);
+      border-radius: 18px;
+      padding: 12px;
+      background: rgba(255, 255, 255, .03);
+    }
+
+    button.script-row {
+      color: var(--text);
+      cursor: pointer;
+      width: 100%;
+      text-align: left
+    }
+
+    button.script-row:hover {
+      border-color: rgba(37, 99, 235, .24);
+      background: rgba(37, 99, 235, .06)
+    }
+
+    .script-row strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .script-row span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .small {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .empty {
+      color: var(--muted);
+      padding: 12px 8px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 1100px) {
+      .app {
+        grid-template-columns: 320px 1fr
+      }
+
+      .modal-grid {
+        grid-template-columns: 1fr
+      }
+    }
+
+    @media (max-width: 900px) {
+      body {
+        overflow: auto
+      }
+
+      .app {
+        grid-template-columns: 1fr;
+        height: auto;
+        min-height: 100%;
+      }
+
+      .sidebar,
+      .main {
+        min-height: auto
+      }
+
+      .main {
+        padding: 16px
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr
+      }
+
+      .hero h2 {
+        font-size: 26px
+      }
+
+      .modal-backdrop {
+        padding: 0
+      }
+
+      .modal {
+        width: 100%;
+        max-height: 100vh;
+        border-radius: 0
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="sidebar-head">
+        <div class="brand">
+          <div>
+            <h1>GHIDORA Monorepo Build-System</h1>
+            <p>Scroll the tree, expand a project, and click any project or script to open the details modal.</p>
+          </div>
+          <button class="theme-btn" id="themeToggle" type="button" aria-pressed="false">
+            <span id="themeIcon"></span>
+            <span id="themeLabel">Night Mode</span>
+          </button>
+        </div>
+
+        <div class="stats">
+          <div class="stat"><span class="k">Projects</span><span class="v" id="statPkgs">0</span></div>
+          <div class="stat"><span class="k">Scripts</span><span class="v" id="statNodes">0</span></div>
+          <div class="stat"><span class="k">Links</span><span class="v" id="statEdges">0</span></div>
+        </div>
+      </div>
+
+      <div class="search">
+        <input id="search" type="search" placeholder="Search projects or scripts..." />
+      </div>
+
+      <div class="tree-wrap">
+        <div class="tree-meta">
+          <div class="section-title">Project tree</div>
+          <div class="tiny" id="treeHint">Click to open</div>
+        </div>
+        <div class="tree" id="tree"></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <div class="hero">
+        <div class="hero-top">
+          <div>
+            <pre>
+      ⠀⠀⣠⣤⣶⣶⡞⡀⣤⣬⣴⠀⠀⢳⣶⣶⣤⣄⡀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⣠⣾⣿⣿⣿⣿⡇⠀⢸⣿⠿⣿⡇⠀⠀⠸⣿⣿⣿⣿⣷⣦⡀⠀⠀⠀
+⠀⠀⢠⡾⣫⣿⣻⣿⣽⣿⡇⠀⠈⢿⣧⡝⠟⠀⠀⢸⣿⣿⣿⣿⣿⣟⢷⣄⠀⠀
+⠀⢠⣯⡾⢿⣿⣿⡿⣿⣿⣿⣆⣠⣶⣿⣿⣷⣄⣰⣿⣿⣿⣿⣿⣿⣿⢷⣽⣄⠀
+⢠⣿⢋⠴⠋⣽⠋⡸⢱⣯⡿⣿⠏⣡⣿⣽⡏⠹⣿⣿⣿⡎⢣⠙⢿⡙⠳⡙⢿⠄
+⣰⢣⣃⠀⠊⠀⠀⠁⠘⠏⠁⠁⠸⣶⣿⡿⢿⡄⠈⠀⠁⠃⠈⠂⠀⠑⠠⣈⡈⣧
+⡏⡘⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡥⢄⢸⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢳⢸
+⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣄⣸⠟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢨
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⡴⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀
+          __    _     __                
+   ____ _/ /_  (_)___/ /___  _________ _
+  / __ `/ __ \/ / __  / __ \/ ___/ __ `/
+ / /_/ / / / / / /_/ / /_/ / /  / /_/ /  
+ \__, /_/ /_/_/\__,_/\____/_/   \__,_/  
+/____/                                  
+
+            </pre>
+            <p>
+              Select and open a project to inspect its description,
+              scripts, package info, and dependencies.
+            </p>
+          </div>
+        </div>
+        <div class="tip" id="emptyTip">
+          Select a project from the tree to view details.
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head">
+        <div>
+          <h3 id="modalTitle">Project</h3>
+          <p id="modalSubtitle"></p>
+        </div>
+        <button class="close" id="closeModal" type="button" aria-label="Close modal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-grid">
+          <div class="box">
+            <h4>Description</h4>
+            <div class="desc" id="modalDesc"></div>
+          </div>
+          <div class="box">
+            <h4>Project info</h4>
+            <div class="tags" id="modalTags"></div>
+            <div style="height:12px"></div>
+            <div class="links" id="modalLinks"></div>
+          </div>
+          <div class="box">
+            <h4>Scripts</h4>
+            <div class="script-list" id="modalScripts"></div>
+          </div>
+          <div class="box">
+            <h4>Dependencies</h4>
+            <div class="script-list" id="modalDeps"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script id="data" type="application/json">__GHIDORA_DATA__</script>
+  <script>
+    const DATA = JSON.parse(document.getElementById("data").textContent || "{}");
+    const nodes = Array.isArray(DATA.nodes) ? DATA.nodes : [];
+    const packages = Array.isArray(DATA.packages) ? DATA.packages : [];
+    const initialSelected = DATA.initial_selected_id || null;
+
+    const tree = document.getElementById("tree");
+    const search = document.getElementById("search");
+    const statPkgs = document.getElementById("statPkgs");
+    const statNodes = document.getElementById("statNodes");
+    const statEdges = document.getElementById("statEdges");
+    const emptyTip = document.getElementById("emptyTip");
+
+    const modalBackdrop = document.getElementById("modalBackdrop");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalSubtitle = document.getElementById("modalSubtitle");
+    const modalDesc = document.getElementById("modalDesc");
+    const modalTags = document.getElementById("modalTags");
+    const modalLinks = document.getElementById("modalLinks");
+    const modalScripts = document.getElementById("modalScripts");
+    const modalDeps = document.getElementById("modalDeps");
+    const closeModal = document.getElementById("closeModal");
+
+    const themeToggle = document.getElementById("themeToggle");
+    const themeLabel = document.getElementById("themeLabel");
+    const themeIcon = document.getElementById("themeIcon");
+
+    const pkgMap = new Map(packages.map(p => [p.name, p]));
+    let expanded = new Set();
+    let selectedPkg = null;
+    let filterText = "";
+
+    const THEME_KEY = "ghidora-theme";
+
+    function esc(s) {
+      return String(s ?? "").replace(/[&<>"']/g, m => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;"
+      }[m]));
+    }
+    function norm(s) { return String(s ?? "").toLowerCase(); }
+    function byTask(a, b) {
+      return String(a.task || a.id || "").localeCompare(String(b.task || b.id || ""), undefined, { sensitivity: "base" });
+    }
+    function getPkgNodes(pkgName) {
+      return nodes.filter(n => n.pkg === pkgName).sort(byTask);
+    }
+    function matchesItem(pkg, pkgNodes) {
+      if (!filterText) return true;
+      const pkgHay = [pkg.name, pkg.description, pkg.kind, pkg.version, pkg.homepage, pkg.repository].join(" ");
+      if (norm(pkgHay).includes(filterText)) return true;
+      return pkgNodes.some(n => norm([n.id, n.task, n.pkg].join(" ")).includes(filterText));
+    }
+    function countEdges() {
+      return nodes.reduce((sum, n) => sum + (Array.isArray(n.depends_on) ? n.depends_on.length : 0), 0);
+    }
+    function setTheme(theme) {
+      const isDay = theme === "day";
+      document.body.dataset.theme = isDay ? "day" : "";
+      themeLabel.textContent = isDay ? "Day Mode" : "Night Mode";
+      themeToggle.setAttribute("aria-pressed", String(isDay));
+      themeIcon.innerHTML = isDay
+        ? '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v2m0 14v2m8-10h2M2 12h2m13.657-6.657 1.414-1.414M6.929 17.071l-1.414 1.414m0-14.142 1.414 1.414m12.728 12.728 1.414 1.414M12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>'
+        : '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a7.5 7.5 0 1 0 10.5 10.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>';
+      try { localStorage.setItem(THEME_KEY, theme); } catch { }
+    }
+    function initTheme() {
+      let theme = "night";
+      try {
+        const saved = localStorage.getItem(THEME_KEY);
+        if (saved === "day" || saved === "night") theme = saved;
+      } catch { }
+      setTheme(theme);
+    }
+    function updateStats() {
+      statPkgs.textContent = String(packages.length);
+      statNodes.textContent = String(nodes.length);
+      statEdges.textContent = String(countEdges());
+    }
+    function openModal(pkgName, scriptName = null) {
+      const pkg = pkgMap.get(pkgName);
+      if (!pkg) return;
+      selectedPkg = pkgName;
+
+      const pkgNodes = getPkgNodes(pkgName);
+      const deps = new Set();
+      pkgNodes.forEach(n => (n.depends_on || []).forEach(d => deps.add(d)));
+
+      const selectedNode = scriptName
+        ? pkgNodes.find(n => n.id === scriptName || n.task === scriptName)
+        : pkgNodes[0] || null;
+
+      modalTitle.textContent = pkg.name;
+      modalSubtitle.textContent = [
+        pkg.kind || "package",
+        pkg.version || "",
+        pkg.private ? "private" : "public",
+        `${pkgNodes.length} scripts`
+      ].filter(Boolean).join(" • ");
+      modalDesc.textContent = pkg.description || "No description available.";
+
+      const tags = [
+        pkg.kind || "package",
+        pkg.version || "",
+        pkg.private ? "private" : "public",
+        `${pkgNodes.length} scripts`,
+        `${deps.size} deps`
+      ].filter(Boolean);
+      modalTags.innerHTML = tags.map(t => `<span class="tag">${esc(t)}</span>`).join("");
+
+      const links = [];
+      if (pkg.homepage) links.push({ label: "Homepage", href: pkg.homepage });
+      if (pkg.repository) links.push({ label: "Repository", href: pkg.repository });
+      if (links.length === 0) links.push({ label: "No links", href: "#" });
+      modalLinks.innerHTML = links.map(l => l.href === "#"
+        ? `<span class="link" style="opacity:.7; cursor:default">${esc(l.label)}</span>`
+        : `<a class="link" href="${esc(l.href)}" target="_blank" rel="noreferrer">${esc(l.label)}</a>`
+      ).join("");
+
+      modalScripts.innerHTML = pkgNodes.length
+        ? pkgNodes.map(n => `
+        <button class="script-row" type="button" data-script="${esc(n.id)}">
+          <strong>${esc(n.id)}</strong>
+          <span>${esc(n.task || "script")} · ${esc(n.depends_on?.length || 0)} deps</span>
+        </button>
+      `).join("")
+        : `<div class="empty">No scripts found for this project.</div>`;
+
+      modalDeps.innerHTML = deps.size
+        ? [...deps].map(dep => {
+          const depNode = nodes.find(n => n.id === dep);
+          return `<div class="script-row">
+          <strong>${esc(dep)}</strong>
+          <span>${depNode ? esc(depNode.pkg + " · " + (depNode.task || "")) : "Dependency"}</span>
+        </div>`;
+        }).join("")
+        : `<div class="empty">No dependencies listed for this project.</div>`;
+
+      modalBackdrop.classList.add("open");
+      modalBackdrop.setAttribute("aria-hidden", "false");
+      emptyTip.textContent = `Viewing ${pkg.name}.`;
+      renderTree();
+
+      if (selectedNode) {
+        const btn = modalScripts.querySelector(`[data-script="${CSS.escape(selectedNode.id)}"]`);
+        if (btn) btn.style.borderColor = "rgba(37,99,235,.28)";
+      }
+    }
+    function closeTheModal() {
+      modalBackdrop.classList.remove("open");
+      modalBackdrop.setAttribute("aria-hidden", "true");
+    }
+    function renderTree() {
+      const visible = packages
+        .map(pkg => ({ pkg, nodes: getPkgNodes(pkg.name) }))
+        .filter(x => matchesItem(x.pkg, x.nodes));
+
+      tree.innerHTML = visible.length ? visible.map(({ pkg, nodes: pkgNodes }) => {
+        const isExpanded = expanded.has(pkg.name) || (filterText && pkgNodes.length > 0);
+        const active = selectedPkg === pkg.name;
+        return `
+      <section class="pkg ${isExpanded ? "expanded" : ""} ${active ? "active" : ""}" data-pkg="${esc(pkg.name)}">
+        <button class="pkg-head" type="button" data-action="toggle" aria-expanded="${isExpanded ? "true" : "false"}">
+          <svg class="chev" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="pkg-title">
+            <strong>${esc(pkg.name)}</strong>
+            <span>${esc(pkg.description || "No description available.")}</span>
+          </div>
+          <span class="badge">${pkgNodes.length} scripts</span>
+        </button>
+        <div class="pkg-body">
+          ${pkgNodes.length ? pkgNodes.map(n => `
+            <button class="script" type="button" data-script="${esc(n.id)}">
+              <span class="dot"></span>
+              <div class="text">
+                <strong>${esc(n.id)}</strong>
+                <span>${esc(n.task || "script")} · ${esc((n.depends_on || []).length)} deps</span>
+              </div>
+              <span class="pill">${esc(pkg.version || "v0")}</span>
+            </button>
+          `).join("") : `<div class="empty">No scripts in this project.</div>`}
+        </div>
+      </section>
+    `;
+      }).join("") : `<div class="empty">No projects match your search.</div>`;
+
+      updateStats();
+    }
+
+    // Event delegation keeps it stable after rerenders.
+    tree.addEventListener("click", (e) => {
+      const scriptBtn = e.target.closest(".script");
+      if (scriptBtn) {
+        const pkgEl = scriptBtn.closest(".pkg");
+        const pkgName = pkgEl?.getAttribute("data-pkg");
+        const scriptId = scriptBtn.getAttribute("data-script");
+        if (pkgName) openModal(pkgName, scriptId);
+        return;
+      }
+
+      const headBtn = e.target.closest(".pkg-head");
+      if (headBtn) {
+        const pkgEl = headBtn.closest(".pkg");
+        const pkgName = pkgEl?.getAttribute("data-pkg");
+        if (!pkgName) return;
+
+        const wasExpanded = pkgEl.classList.contains("expanded");
+        if (wasExpanded) expanded.delete(pkgName); else expanded.add(pkgName);
+        renderTree();
+        openModal(pkgName);
+      }
+    });
+
+    search.addEventListener("input", () => {
+      filterText = norm(search.value.trim());
+      renderTree();
+    });
+
+    themeToggle.addEventListener("click", () => {
+      const isDay = document.body.dataset.theme === "day";
+      setTheme(isDay ? "night" : "day");
+    });
+
+    closeModal.addEventListener("click", closeTheModal);
+    modalBackdrop.addEventListener("click", (e) => {
+      if (e.target === modalBackdrop) closeTheModal();
+    });
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeTheModal();
+    });
+
+    modalScripts.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-script]");
+      if (!btn) return;
+      const scriptId = btn.getAttribute("data-script");
+      const pkgName = selectedPkg || (initialSelected && nodes.find(n => n.id === initialSelected)?.pkg);
+      if (pkgName) openModal(pkgName, scriptId);
+    });
+
+    initTheme();
+    expanded = new Set(packages.slice(0, Math.min(3, packages.length)).map(p => p.name));
+    renderTree();
+
+    if (initialSelected) {
+      const n = nodes.find(x => x.id === initialSelected);
+      if (n) openModal(n.pkg, n.id);
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@types/node": "^26.6.6"
+  },
+  "devDependencies": {
+    "@boltffi/runtime": "^0.32.1"
+  }
+}
