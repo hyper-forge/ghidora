@@ -1,0 +1,25 @@
+{
+  "name": "@hyperforge/ghidora-core",
+  "version": "0.0.10",
+  "files": [
+    "ghidora_bg.wasm",
+    "ghidora.js",
+    "ghidora.d.ts"
+  ],
+  "main": "ghidora.js",
+  "types": "ghidora.d.ts",
+  "type": "commonjs",
+  "author": {
+    "name": "Hyperforge",
+    "url": "https://ghidora.hyperforge.in"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hyper-forge/ghidora"
+  },
+  "homepage": "https://ghidora.hyperforge.in",
+  "bugs": {
+    "url": "https://github.com/hyper-forge/ghidora/issues"
+  }
+}

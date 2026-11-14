@@ -1,0 +1,34 @@
+/* tslint:disable */
+/* eslint-disable */
+export const memory: WebAssembly.Memory;
+export const generate_graphui: (a: any) => [number, number];
+export const get_esbuild_config: () => [number, number];
+export const get_ghidora_config: () => [number, number];
+export const get_package_template: (a: number, b: number, c: number, d: number) => [number, number];
+export const get_tsconfig: (a: number, b: number) => [number, number];
+export const pick_color: (a: number, b: number) => number;
+export const hash_bytes: (a: number, b: number) => [number, number];
+export const hash_equals: (a: number, b: number, c: number, d: number) => number;
+export const badge: (a: number, b: number, c: number) => [number, number];
+export const box_ui: (a: number, b: number, c: number, d: number) => [number, number];
+export const clear: () => [number, number];
+export const clear_line: () => [number, number];
+export const cursor_to: (a: number, b: number) => [number, number];
+export const draw_static: () => [number, number];
+export const ghidora_logo: () => [number, number];
+export const gradient: (a: number, b: number) => [number, number];
+export const header: (a: number, b: number) => [number, number];
+export const hide_cursor: () => [number, number];
+export const show_cursor: () => [number, number];
+export const spinner_at: (a: number, b: number) => [number, number];
+export const tar_files: (a: any) => [number, number];
+export const targz_files: (a: any) => [number, number];
+export const untar_files: (a: number, b: number) => any;
+export const untargz_files: (a: number, b: number) => any;
+export const __wbindgen_malloc: (a: number, b: number) => number;
+export const __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;
+export const __wbindgen_exn_store: (a: number) => void;
+export const __externref_table_alloc: () => number;
+export const __wbindgen_externrefs: WebAssembly.Table;
+export const __wbindgen_free: (a: number, b: number, c: number) => void;
+export const __wbindgen_start: () => void;

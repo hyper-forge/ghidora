@@ -1,0 +1,6 @@
+{
+  "type": "module",
+  "devDependencies": {
+    "@boltffi/runtime": "^0.32.1"
+  }
+}
