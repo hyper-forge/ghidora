@@ -64,7 +64,7 @@ cargo build --release
 ### WebAssembly
 
 ```
-wasm-pack build
+boltffi pack wasm --release
 ```
 
 ---
